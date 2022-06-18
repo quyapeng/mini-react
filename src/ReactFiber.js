@@ -1,7 +1,7 @@
 import { FunctionComponent, HostComponent } from "./ReactWorkTags";
 import { isFn, isStr } from "./utils";
 
-Placement;
+// Placement;
 
 export default function createFiber(vnode, returnFiber) {
   //
@@ -15,7 +15,7 @@ export default function createFiber(vnode, returnFiber) {
     sibling: null, // 下一个兄弟节点（fiber）
     return: returnFiber, // 父节点 fiber
     // 标记节点是什么类型，
-    flags: Placement,
+    // flags: Placement,
     alternate: null, // 老节点 组件更新时会用到
     deletions: null, // 要删除子阶段null 或者[]
     index: null, // 当前层级下的下标，从0开始

@@ -1,4 +1,9 @@
-import React, { useReducer } from "react";
-import ReactDOM from "react-dom";
+// import React, { useReducer } from "react";
+// import ReactDOM from "react-dom";
 
-export { ReactDOM, useReducer };
+import ReactDOM from "../src/react-dom";
+
+export {
+  ReactDOM,
+  // useReducer
+};

@@ -1,4 +1,4 @@
-import { updateHostComponent } from "./ReactReconciler";
+import { updateHostComponent } from "./ReactFiberReconciler";
 import {
   ClassComponent,
   Fragment,
@@ -8,6 +8,13 @@ import {
 } from "./ReactWorkTags";
 
 let wip = null; // work in progress 当前正在工作中
+let wipRoot = null;
+
+// 初次渲染
+export function scheduleUpdateOnFiber(fiber) {
+  wip = fiber;
+  wipRoot = fiber;
+}
 
 function performUnitOfWork() {
   // 根据当前节点类型来更新
