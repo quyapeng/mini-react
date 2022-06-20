@@ -12,7 +12,7 @@ function ReactDOMRoot(internalRoot) {
   this._internalRoot = internalRoot;
 }
 ReactDOMRoot.prototype.render = function (children) {
-  console.log("children", children); // vnode-->转换为fiber
+  // console.log("children", children); // vnode-->转换为fiber
   const root = this._internalRoot;
 
   updateContainer(children, root);
