@@ -21,13 +21,13 @@ export default function createFiber(vnode, returnFiber) {
     // type: "div", // type为字符串时，代表当前节点是原生标签。为funcion 为class对象
   };
 
-  const { type } = fiber;
-  if (isStr(type)) {
-    fiber.tag = HostComponent;
-  } else if (isFn(type)) {
-    // 是类组件还是函数组件
-    fiber.tag = FunctionComponent;
-  }
+  // const { type } = fiber;
+  // if (isStr(type)) {
+  //   fiber.tag = HostComponent;
+  // } else if (isFn(type)) {
+  //   // 是类组件还是函数组件
+  //   fiber.tag = FunctionComponent;
+  // }
   // else if(){
   //       // 文本，
   //   }

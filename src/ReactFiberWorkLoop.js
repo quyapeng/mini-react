@@ -19,7 +19,7 @@ export function scheduleUpdateOnFiber(fiber) {
 
 function performUnitOfWork() {
   // 根据当前节点类型来更新
-  const { tag, type } = wip;
+  const { type } = wip;
   console.log(wip.type);
   if (isStr(type)) {
     updateHostComponent(wip);
@@ -54,7 +54,8 @@ function performUnitOfWork() {
 
   while (next) {
     if (wip.sibling) {
-      wip = next.sibling;
+      wip = wip.sibling;
+      return;
     }
     next = next.return;
   }
@@ -92,8 +93,8 @@ function commitWorker(wip) {
   const { flags, stateNode } = wip;
 
   if (flags & Placement && stateNode) {
-    // flags 是placement 并且node节点存在，是不是dom节点
-    // parentNode 是父级
+    // flags 是placement 并且node节点存在，(是不是dom节点)
+    // parentNode 是父级dom
     parentNode.appendChild(stateNode);
   }
 

@@ -11,23 +11,23 @@ function createRoot(container) {
 function ReactDOMRoot(internalRoot) {
   this._internalRoot = internalRoot;
 }
+
 ReactDOMRoot.prototype.render = function (children) {
   // console.log("children", children); // vnode-->转换为fiber
-  const root = this._internalRoot;
 
+  const root = this._internalRoot;
   updateContainer(children, root);
 };
 
 function updateContainer(element, container) {
-  //
   const { containerInfo } = container;
-  const fiber = createFiber(element, {
-    type: containerInfo.nodeName.toLocaleLowerCase(),
+  // 根fiber
+  const rootFiber = createFiber(element, {
+    type: containerInfo.nodeName.toLowerCase(),
     stateNode: containerInfo,
   });
-
   // 组件初次渲染
-  scheduleUpdateOnFiber(fiber);
+  scheduleUpdateOnFiber(rootFiber);
 }
 export default {
   createRoot,

@@ -16,7 +16,7 @@ import './index.css';
 const jsx = (
   <div className='border'>
     <h1>react</h1>
-    <a href="https://github.com/quyapeng/mini-react">mini react</a>
+    <h2 href="https://github.com/quyapeng/mini-react">mini react</h2>
   </div>
 );
 
