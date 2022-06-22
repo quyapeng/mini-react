@@ -1,4 +1,8 @@
-import { FunctionComponent, HostComponent } from "./ReactWorkTags";
+import {
+  ClassComponent,
+  FunctionComponent,
+  HostComponent,
+} from "./ReactWorkTags";
 import { isFn, isStr, Placement } from "./utils";
 
 export default function createFiber(vnode, returnFiber) {
@@ -21,16 +25,16 @@ export default function createFiber(vnode, returnFiber) {
     // type: "div", // type为字符串时，代表当前节点是原生标签。为funcion 为class对象
   };
 
-  // const { type } = fiber;
-  // if (isStr(type)) {
-  //   fiber.tag = HostComponent;
-  // } else if (isFn(type)) {
-  //   // 是类组件还是函数组件
-  //   fiber.tag = FunctionComponent;
-  // }
-  // else if(){
-  //       // 文本，
-  //   }
+  const { type } = vnode;
+
+  if (isStr(type)) {
+    fiber.tag = HostComponent;
+  } else if (isFn(type)) {
+    // 函数组件以及类组件
+    fiber.tag = type.prototype.isReactComponent
+      ? ClassComponent
+      : FunctionComponent;
+  }
 
   return fiber;
 }

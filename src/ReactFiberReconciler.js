@@ -1,6 +1,6 @@
 // 协调
 
-import { isArray, isStringOrNumber } from "./utils";
+import { isArray, isStringOrNumber, updateNode } from "./utils";
 import createFiber from "./ReactFiber";
 
 export function updateHostComponent(wip) {
@@ -9,6 +9,7 @@ export function updateHostComponent(wip) {
   // console.log(wip.type);
   if (!wip.stateNode) {
     wip.stateNode = document.createElement(wip.type);
+    updateNode(wip.stateNode, wip.props);
   }
   // 子节点
   reconcileChildren(wip, wip.props.children);
@@ -19,13 +20,13 @@ function reconcileChildren(wip, children) {
   if (isStringOrNumber(children)) return;
   const newChildren = isArray(children) ? children : [children];
   let previousNewFiber = null;
+
   for (let i = 0; i < newChildren.length; i++) {
     const newChild = newChildren[i];
     if (newChild == null) {
       continue;
     }
     const newFiber = createFiber(newChild, wip);
-    console.log(newFiber);
     if (previousNewFiber === null) {
       // head node
       wip.child = newFiber;
@@ -37,12 +38,20 @@ function reconcileChildren(wip, children) {
   }
 }
 
-export function updateClassComponent() {
+export function updateClassComponent(wip) {
   //
+  const { type, props } = wip;
+  const instance = new type(props);
+  const children = instance.render();
+
+  reconcileChildren(wip, children);
 }
 
-export function updateFunctionComponent() {
+export function updateFunctionComponent(wip) {
   //
+  const { type, props } = wip;
+  const children = type(props); // ?
+  reconcileChildren(wip, children);
 }
 
 export function updateFragmentComponent() {
