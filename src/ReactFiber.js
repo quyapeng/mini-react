@@ -2,8 +2,10 @@ import {
   ClassComponent,
   FunctionComponent,
   HostComponent,
+  HostText,
+  Fragment,
 } from "./ReactWorkTags";
-import { isFn, isStr, Placement } from "./utils";
+import { isFn, isStr, Placement, isUndefined } from "./utils";
 
 export default function createFiber(vnode, returnFiber) {
   //
@@ -18,7 +20,7 @@ export default function createFiber(vnode, returnFiber) {
     return: returnFiber, // 父节点 fiber
     // 标记节点是什么类型，
     flags: Placement,
-    alternate: null, // 老节点 组件更新时会用到
+    // alternate: null, // 老节点 组件更新时会用到
     deletions: null, // 要删除子阶段null 或者[]
     index: null, // 当前层级下的下标，从0开始
     // tag: 1, //
@@ -26,7 +28,7 @@ export default function createFiber(vnode, returnFiber) {
   };
 
   const { type } = vnode;
-
+  // console.log("type", type);
   if (isStr(type)) {
     fiber.tag = HostComponent;
   } else if (isFn(type)) {
@@ -34,6 +36,14 @@ export default function createFiber(vnode, returnFiber) {
     fiber.tag = type.prototype.isReactComponent
       ? ClassComponent
       : FunctionComponent;
+  } else if (isUndefined(type)) {
+    // 文本
+    // 单独处理文本节点，以便后续渲染能找到
+    fiber.tag = HostText;
+    fiber.props = { children: vnode };
+  } else {
+    // fragment
+    fiber.tag = Fragment;
   }
 
   return fiber;

@@ -11,6 +11,8 @@
 
 
 
+import { Fragment } from 'react';
+import { updateFragmentComponent } from '../../src/ReactFiberReconciler';
 import { ReactDOM, Component } from '../which-react';
 import './index.css';
 
@@ -33,12 +35,25 @@ class ClassComponent extends Component {
   }
 }
 
+function FragmentComponent(){
+  return (
+    <ul>
+      <>
+        <li>list 1</li>
+        <li>list 2</li>
+      </>
+    </ul>
+  )
+}
+
 const jsx = (
   <div className='border'>
     <h1>react</h1>
     <h2 href="https://github.com/quyapeng/mini-react">mini react</h2>
     <FunctionComponent name="函数组件" />
     <ClassComponent name="类组件" />
+    <FragmentComponent />
+    
   </div>
 );
 

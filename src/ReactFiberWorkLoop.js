@@ -2,6 +2,8 @@ import {
   updateHostComponent,
   updateFunctionComponent,
   updateClassComponent,
+  updateHostTextComponent,
+  updateFragmentComponent,
 } from "./ReactFiberReconciler";
 import {
   ClassComponent,
@@ -67,7 +69,6 @@ function performUnitOfWork() {
 function workLoop(IdleDeadLine) {
   // workLoop  浏览器是否有空闲时间
   // console.log(wip); wip && IdleDeadLine.timeRemaining() > 0
-  // console.log(wip);
   while (wip && IdleDeadLine.timeRemaining() > 0) {
     performUnitOfWork();
   }
@@ -97,8 +98,7 @@ function commitWorker(wip) {
   const { flags, stateNode } = wip;
 
   if (flags & Placement && stateNode) {
-    // flags 是placement 并且node节点存在，(是不是dom节点)
-    // parentNode 是父级dom
+    // flags 是placement 并且node节点存在，(是不是dom节点) parentNode 是父级dom
     parentNode.appendChild(stateNode);
   }
 
